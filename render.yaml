@@ -4,13 +4,13 @@ services:
     env: python
     region: frankfurt
     buildCommand: pip install -r requirements.txt && pip install gunicorn
-    startCommand: gunicorn --bind 0.0.0.0:10000 app:app
+    startCommand: gunicorn wsgi:server
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
       - key: PORT
         value: 10000
       - key: GUNICORN_CMD_ARGS
-        value: "--timeout 120 --workers 1"
+        value: "--timeout 120 --workers 1 --bind 0.0.0.0:$PORT"
     healthCheckPath: /
     autoDeploy: true
