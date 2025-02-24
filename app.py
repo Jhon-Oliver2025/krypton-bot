@@ -349,6 +349,12 @@ def update_results_projection(_):
     except Exception as e:
         print(f"Erro ao atualizar projeção: {e}")
         return []
+def start_monitoring():
+    print("\nIniciando sistema de monitoramento...")
+    try:
+        background_monitor()  # Chama diretamente a função
+    except Exception as e:
+        print(f"Erro ao iniciar monitoramento: {e}")
 def background_monitor():
     while True:
         try:
@@ -406,14 +412,12 @@ def background_monitor():
         except Exception as e:
             print(f"\nErro no monitoramento: {e}")
             time.sleep(60)
-
 def start_monitoring():
     print("\nIniciando sistema de monitoramento...")
     monitor_thread = threading.Thread(target=background_monitor, daemon=True)
     monitor_thread.start()
-    print("Monitoramento iniciado com sucesso!")
-
+    return monitor_thread
 if __name__ == '__main__':
     print("\n=== Iniciando KryptoN Trading Bot ===")
-    start_monitoring()
+    monitor = start_monitoring()
     app.run_server(debug=False)
