@@ -7,9 +7,9 @@ print("=== Iniciando KryptoN Trading Bot ===")
 def setup_inicial():
     try:
         print("\nConfigurando sistema...")
-        # Configura apenas BTC para teste inicial
+        # Configura apenas BTC em spot
         analyzer.futures_pairs = [
-            'BTCUSDT'  # Apenas BTC por enquanto
+            'BTCUSDT'  # Mercado spot
         ]
         print(f"Par configurado: {analyzer.futures_pairs[0]}")
         
@@ -17,20 +17,27 @@ def setup_inicial():
         analyzer.timeframes = ['4h']
         print(f"Timeframe configurado: 4H")
         
-        # Configurações para API pública
-        analyzer.period = '2'  # Mínimo de velas
-        analyzer.retry_delay = 900  # 15 minutos entre chamadas
+        # Configurações extremamente conservadoras
+        analyzer.period = '1'  # Período mínimo
+        analyzer.retry_delay = 3600  # 1 hora entre chamadas
         analyzer.max_retries = 1  # Sem retry
-        analyzer.timeout = 30  # Timeout curto
-        analyzer.use_public_api = True  # Força uso da API pública
-        analyzer.api_weight = 1  # Peso mínimo
-        print("Configurações ajustadas para API pública")
+        analyzer.timeout = 10  # Timeout curto
+        analyzer.use_spot = True  # Força mercado spot
+        analyzer.api_weight = 1  # Peso mínimo de API
+        analyzer.use_proxy = True  # Tenta usar proxy
+        print("Configurações ajustadas para modo spot com delay máximo")
         
         return True
     except Exception as e:
         print(f"Erro na configuração inicial: {e}")
         return False
 
+# Configura porta para o gunicorn
+app.server.config.update({
+    'PORT': 10000,
+    'host': '0.0.0.0',
+    'workers': 1
+})
 def verificar_configuracoes():
     try:
         # Executa setup inicial
