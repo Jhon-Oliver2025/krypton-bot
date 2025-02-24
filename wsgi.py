@@ -9,7 +9,7 @@ def setup_inicial():
         print("\nConfigurando sistema...")
         # Configura apenas BTC para teste inicial
         analyzer.futures_pairs = [
-            'BTCUSDT'  # Remove .P temporariamente
+            'BTCUSDT'  # Apenas BTC por enquanto
         ]
         print(f"Par configurado: {analyzer.futures_pairs[0]}")
         
@@ -17,12 +17,17 @@ def setup_inicial():
         analyzer.timeframes = ['4h']
         print(f"Timeframe configurado: 4H")
         
-        # Configurações mais conservadoras
-        analyzer.period = '5'  # Reduz período
-        analyzer.retry_delay = 300  # 5 minutos entre chamadas
+        # Configurações ultra conservadoras
+        analyzer.period = '3'  # Reduz período ao mínimo
+        analyzer.retry_delay = 600  # 10 minutos entre chamadas
         analyzer.max_retries = 1  # Apenas uma tentativa
-        analyzer.timeout = 60  # Aumenta timeout
-        print("Configurações de API ajustadas para modo conservador")
+        analyzer.timeout = 120  # 2 minutos de timeout
+        analyzer.keep_alive = True  # Mantém conexão ativa
+        print("Configurações de API ajustadas para modo ultra conservador")
+        
+        # Força limpeza de memória
+        import gc
+        gc.collect()
         
         return True
     except Exception as e:
