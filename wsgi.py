@@ -4,16 +4,31 @@ import time
 
 print("=== Iniciando KryptoN Trading Bot ===")
 
+def setup_inicial():
+    try:
+        print("\nConfigurando pares de trading...")
+        # Força a configuração dos pares
+        analyzer.futures_pairs = [
+            'BTCUSDT', 'ETHUSDT', 'BNBUSDT', 'XRPUSDT', 'ADAUSDT',
+            'DOGEUSDT', 'MATICUSDT', 'SOLUSDT', 'DOTUSDT', 'LTCUSDT'
+        ]
+        print(f"Pares configurados: {len(analyzer.futures_pairs)}")
+        print(f"Lista de pares: {analyzer.futures_pairs}")
+        
+        # Configura timeframes
+        analyzer.timeframes = ['4h', '1h', '15m']
+        print(f"Timeframes configurados: {analyzer.timeframes}")
+        
+        return True
+    except Exception as e:
+        print(f"Erro na configuração inicial: {e}")
+        return False
+
 def verificar_configuracoes():
     try:
-        # Verifica e configura pares de trading
-        if len(analyzer.futures_pairs) == 0:
-            print("\nConfigurando pares de trading...")
-            analyzer.setup_pairs()
-        
-        print(f"\nPares disponíveis: {len(analyzer.futures_pairs)}")
-        print("Exemplo de pares:", analyzer.futures_pairs[:3])
-        print(f"Timeframes configurados: {analyzer.timeframes}")
+        # Executa setup inicial
+        if not setup_inicial():
+            return False
         
         # Verifica Telegram
         print("\nVerificando configuração do Telegram...")
