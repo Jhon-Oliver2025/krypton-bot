@@ -7,23 +7,22 @@ print("=== Iniciando KryptoN Trading Bot ===")
 def setup_inicial():
     try:
         print("\nConfigurando sistema...")
-        # Configura pares com .P para futuros
+        # Configura apenas BTC para teste inicial
         analyzer.futures_pairs = [
-            'BTCUSDT.P', 'ETHUSDT.P'
+            'BTCUSDT'  # Remove .P temporariamente
         ]
-        print(f"Pares configurados: {len(analyzer.futures_pairs)}")
-        print(f"Lista de pares: {analyzer.futures_pairs}")
+        print(f"Par configurado: {analyzer.futures_pairs[0]}")
         
         # Configura apenas timeframe de 4H
         analyzer.timeframes = ['4h']
         print(f"Timeframe configurado: 4H")
         
-        # Ajusta configurações para evitar timeout
-        analyzer.period = '10'  # Reduz período drasticamente
-        analyzer.retry_delay = 180  # 3 minutos entre chamadas
-        analyzer.max_retries = 2  # Reduz número de tentativas
-        analyzer.timeout = 30  # Timeout em segundos
-        print("Configurações de API ajustadas")
+        # Configurações mais conservadoras
+        analyzer.period = '5'  # Reduz período
+        analyzer.retry_delay = 300  # 5 minutos entre chamadas
+        analyzer.max_retries = 1  # Apenas uma tentativa
+        analyzer.timeout = 60  # Aumenta timeout
+        print("Configurações de API ajustadas para modo conservador")
         
         return True
     except Exception as e:
