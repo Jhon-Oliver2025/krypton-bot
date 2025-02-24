@@ -6,11 +6,11 @@ print("=== Iniciando KryptoN Trading Bot ===")
 
 def setup_inicial():
     try:
-        print("\nConfigurando pares de trading...")
-        # Força a configuração dos pares
+        print("\nConfigurando sistema...")
+        # Configura pares diretamente
         analyzer.futures_pairs = [
-            'BTCUSDT', 'ETHUSDT', 'BNBUSDT', 'XRPUSDT', 'ADAUSDT',
-            'DOGEUSDT', 'MATICUSDT', 'SOLUSDT', 'DOTUSDT', 'LTCUSDT'
+            'BTCUSDT.P', 'ETHUSDT.P', 'BNBUSDT.P', 'XRPUSDT.P', 'ADAUSDT.P',
+            'DOGEUSDT.P', 'MATICUSDT.P', 'SOLUSDT.P', 'DOTUSDT.P', 'LTCUSDT.P'
         ]
         print(f"Pares configurados: {len(analyzer.futures_pairs)}")
         print(f"Lista de pares: {analyzer.futures_pairs}")
@@ -18,6 +18,10 @@ def setup_inicial():
         # Configura timeframes
         analyzer.timeframes = ['4h', '1h', '15m']
         print(f"Timeframes configurados: {analyzer.timeframes}")
+        
+        # Configura período
+        analyzer.period = '1000'
+        print("Período configurado:", analyzer.period)
         
         return True
     except Exception as e:
