@@ -36,10 +36,10 @@ def verificar_configuracoes():
         if not setup_inicial():
             return False
         
-        # Test API connection first
+        # Testa conexão com API
         print("\nTestando conexão com API...")
         test_pair = analyzer.futures_pairs[0]
-        test_data = analyzer.get_klines(test_pair, '4h', limit=1)
+        test_data = analyzer.get_klines(test_pair, '4h')  # Removido o parâmetro limit
         if test_data is not None:
             print("Conexão com API OK")
         
