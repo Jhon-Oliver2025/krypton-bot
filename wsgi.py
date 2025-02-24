@@ -54,8 +54,7 @@ def iniciar_monitoramento():
 iniciar_monitoramento()
 
 # Configura aplicação para o gunicorn
-application = app.server
-app.server.config.update({
+app.config.update({
     'PORT': 10000,
     'host': '0.0.0.0',
     'workers': 1,
@@ -63,4 +62,4 @@ app.server.config.update({
 })
 
 # Expõe a aplicação para o gunicorn
-server = application
+application = app
