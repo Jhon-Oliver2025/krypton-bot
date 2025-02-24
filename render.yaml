@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: krypton-bot
+    env: python
+    region: frankfurt
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn wsgi:create_app()
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0

@@ -61,5 +61,9 @@ app.config.update({
     'timeout': 120
 })
 
+# Função para criar a aplicação
+def create_app():
+    return app
+
 # Expõe a aplicação para o gunicorn
-application = app
+application = create_app()
