@@ -17,15 +17,24 @@ def setup_inicial():
         analyzer.timeframes = ['4h']
         print(f"Timeframe configurado: 4H")
         
-        # Configurações extremamente conservadoras
-        analyzer.period = '1'  # Período mínimo
-        analyzer.retry_delay = 3600  # 1 hora entre chamadas
+        # Configurações para API pública
+        analyzer.period = '1'  # Apenas 1 vela
+        analyzer.retry_delay = 7200  # 2 horas entre chamadas
         analyzer.max_retries = 1  # Sem retry
-        analyzer.timeout = 10  # Timeout curto
+        analyzer.timeout = 5  # Timeout mínimo
         analyzer.use_spot = True  # Força mercado spot
-        analyzer.api_weight = 1  # Peso mínimo de API
-        analyzer.use_proxy = True  # Tenta usar proxy
-        print("Configurações ajustadas para modo spot com delay máximo")
+        analyzer.api_weight = 1  # Peso mínimo
+        analyzer.use_public_api = True  # Força uso da API pública
+        analyzer.region = 'asia'  # Tenta região da Ásia
+        print("Configurações ajustadas para API pública")
+        
+        # Adiciona verificação de IP
+        import requests
+        try:
+            ip = requests.get('https://api.ipify.org?format=json', timeout=5).json()
+            print(f"IP do servidor: {ip['ip']}")
+        except:
+            print("Não foi possível verificar o IP")
         
         return True
     except Exception as e:
@@ -36,7 +45,8 @@ def setup_inicial():
 app.server.config.update({
     'PORT': 10000,
     'host': '0.0.0.0',
-    'workers': 1
+    'workers': 1,
+    'timeout': 120
 })
 def verificar_configuracoes():
     try:
