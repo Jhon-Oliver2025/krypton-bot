@@ -1,4 +1,4 @@
-from app import app, start_monitoring, background_monitor, analyzer, db
+from app import app, start_monitoring, background_monitor, analyzer, db, notifier
 import threading
 import time
 
@@ -6,7 +6,11 @@ print("=== Iniciando KryptoN Trading Bot ===")
 
 def verificar_configuracoes():
     try:
-        # Verifica configurações do analyzer
+        # Verifica e configura pares de trading
+        if len(analyzer.futures_pairs) == 0:
+            print("\nConfigurando pares de trading...")
+            analyzer.setup_pairs()
+        
         print(f"\nPares disponíveis: {len(analyzer.futures_pairs)}")
         print("Exemplo de pares:", analyzer.futures_pairs[:3])
         print(f"Timeframes configurados: {analyzer.timeframes}")
@@ -15,6 +19,8 @@ def verificar_configuracoes():
         print("\nVerificando configuração do Telegram...")
         if hasattr(notifier, 'telegram_token'):
             print("Token do Telegram configurado")
+        else:
+            print("AVISO: Token do Telegram não encontrado")
         
         # Verifica banco de dados
         print("\nVerificando banco de dados...")
