@@ -9,8 +9,8 @@ def setup_inicial():
         print("\nConfigurando sistema...")
         # Configura pares diretamente
         analyzer.futures_pairs = [
-            'BTCUSDT.P', 'ETHUSDT.P', 'BNBUSDT.P', 'XRPUSDT.P', 'ADAUSDT.P',
-            'DOGEUSDT.P', 'MATICUSDT.P', 'SOLUSDT.P', 'DOTUSDT.P', 'LTCUSDT.P'
+            'BTCUSDT', 'ETHUSDT', 'BNBUSDT', 'XRPUSDT', 'ADAUSDT',
+            'DOGEUSDT', 'MATICUSDT', 'SOLUSDT', 'DOTUSDT', 'LTCUSDT'
         ]
         print(f"Pares configurados: {len(analyzer.futures_pairs)}")
         print(f"Lista de pares: {analyzer.futures_pairs}")
@@ -19,8 +19,9 @@ def setup_inicial():
         analyzer.timeframes = ['4h']
         print(f"Timeframe configurado: 4H")
         
-        # Configura período
-        analyzer.period = '1000'
+        # Configura período e delay
+        analyzer.period = '100'  # Reduced period
+        analyzer.retry_delay = 5  # Add delay between API calls
         print("Período configurado:", analyzer.period)
         
         return True
@@ -33,6 +34,13 @@ def verificar_configuracoes():
         # Executa setup inicial
         if not setup_inicial():
             return False
+        
+        # Test API connection first
+        print("\nTestando conexão com API...")
+        test_pair = analyzer.futures_pairs[0]
+        test_data = analyzer.get_klines(test_pair, '4h', limit=1)
+        if test_data is not None:
+            print("Conexão com API OK")
         
         # Verifica Telegram
         print("\nVerificando configuração do Telegram...")
