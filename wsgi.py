@@ -17,17 +17,14 @@ def setup_inicial():
         analyzer.timeframes = ['4h']
         print(f"Timeframe configurado: 4H")
         
-        # Configurações ultra conservadoras
-        analyzer.period = '3'  # Reduz período ao mínimo
-        analyzer.retry_delay = 600  # 10 minutos entre chamadas
-        analyzer.max_retries = 1  # Apenas uma tentativa
-        analyzer.timeout = 120  # 2 minutos de timeout
-        analyzer.keep_alive = True  # Mantém conexão ativa
-        print("Configurações de API ajustadas para modo ultra conservador")
-        
-        # Força limpeza de memória
-        import gc
-        gc.collect()
+        # Configurações para API pública
+        analyzer.period = '2'  # Mínimo de velas
+        analyzer.retry_delay = 900  # 15 minutos entre chamadas
+        analyzer.max_retries = 1  # Sem retry
+        analyzer.timeout = 30  # Timeout curto
+        analyzer.use_public_api = True  # Força uso da API pública
+        analyzer.api_weight = 1  # Peso mínimo
+        print("Configurações ajustadas para API pública")
         
         return True
     except Exception as e:
