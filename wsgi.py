@@ -15,9 +15,9 @@ def setup_inicial():
         print(f"Pares configurados: {len(analyzer.futures_pairs)}")
         print(f"Lista de pares: {analyzer.futures_pairs}")
         
-        # Configura timeframes
-        analyzer.timeframes = ['4h', '1h', '15m']
-        print(f"Timeframes configurados: {analyzer.timeframes}")
+        # Configura apenas timeframe de 4H
+        analyzer.timeframes = ['4h']
+        print(f"Timeframe configurado: 4H")
         
         # Configura período
         analyzer.period = '1000'
