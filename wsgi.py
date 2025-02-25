@@ -23,16 +23,13 @@ def setup_inicial():
 # Configura e inicia o monitoramento
 setup_inicial()
 
-# Expõe a aplicação para o gunicorn
-server = app.server
-application = server
-
-flask==2.0.1
-python-binance==1.0.16
-gunicorn==21.2.0# Expõe o servidor para o gunicorn
-from app import app
+# Função para criar a aplicação WSGI
 def create_app():
-    return app
+    return app.server
+
+# Expõe a aplicação para o gunicorn
+application = create_app()
+server = application
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=10000)
+    app.run_server(host='0.0.0.0', port=10000)
