@@ -23,9 +23,12 @@ def setup_inicial():
 # Configura e inicia o monitoramento
 setup_inicial()
 
-# Expõe o servidor para o gunicorn
-from app import app
+# Configuração do servidor WSGI
 server = app.server
+
+# Função para inicialização do Gunicorn
+def create_app():
+    return server
 
 if __name__ == "__main__":
     app.run_server(debug=False, host='0.0.0.0', port=10000)
