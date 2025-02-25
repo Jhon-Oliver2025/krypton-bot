@@ -6,10 +6,9 @@ services:
     buildCommand: |
       python -m pip install --upgrade pip
       pip install -r requirements.txt
-      pip install gunicorn dash pandas-ta python-binance flask
+      pip install gunicorn dash pandas-ta python-binance
     startCommand: |
-      source /opt/render/project/src/.venv/bin/activate && \
-      gunicorn --bind 0.0.0.0:$PORT --workers 1 --timeout 120 --log-level debug app:server
+      python -m gunicorn --bind 0.0.0.0:$PORT --workers 1 --timeout 300 --log-level debug wsgi:server
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
@@ -17,5 +16,9 @@ services:
         value: 10000
       - key: PYTHONPATH
         value: .
+      - key: GUNICORN_TIMEOUT
+        value: "300"
+      - key: DASH_DEBUG
+        value: "false"
     healthCheckPath: /
     autoDeploy: true
