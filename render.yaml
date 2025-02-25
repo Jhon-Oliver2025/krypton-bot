@@ -6,9 +6,7 @@ services:
     buildCommand: |
       python -m pip install --upgrade pip
       pip install -r requirements.txt
-      pip install gunicorn dash pandas-ta python-binance
-    startCommand: |
-      python -m gunicorn --bind 0.0.0.0:$PORT --workers 1 --timeout 300 --log-level debug wsgi:server
+    startCommand: python wsgi.py
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
@@ -16,8 +14,6 @@ services:
         value: 10000
       - key: PYTHONPATH
         value: .
-      - key: GUNICORN_TIMEOUT
-        value: "300"
       - key: DASH_DEBUG
         value: "false"
     healthCheckPath: /
