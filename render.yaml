@@ -3,14 +3,16 @@ services:
     name: krypton-bot
     env: python
     region: frankfurt
-    buildCommand: pip install -r requirements.txt && pip install dash gunicorn
-    startCommand: gunicorn --bind 0.0.0.0:$PORT "wsgi:create_app()"
+    buildCommand: pip install -r requirements.txt && pip install gunicorn dash
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 1 --timeout 120 app:server
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
       - key: PORT
         value: 10000
-      - key: PYTHONPATH
-        value: .
+      - key: DASH_DEBUG
+        value: "false"
+      - key: PYTHONUNBUFFERED
+        value: "true"
     healthCheckPath: /
     autoDeploy: true

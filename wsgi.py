@@ -23,8 +23,9 @@ def setup_inicial():
 # Configura e inicia o monitoramento
 setup_inicial()
 
-def create_app():
-    return app.server
+# Expõe o servidor para o gunicorn
+from app import app
+server = app.server
 
 if __name__ == "__main__":
-    app.run_server(debug=True, host='0.0.0.0', port=10000)
+    app.run_server(debug=False, host='0.0.0.0', port=10000)
