@@ -24,11 +24,7 @@ def setup_inicial():
 setup_inicial()
 
 # Configuração do servidor WSGI
-server = app.server
-
-# Função para inicialização do Gunicorn
-def create_app():
-    return server
+application = app.server
 
 if __name__ == "__main__":
     app.run_server(debug=False, host='0.0.0.0', port=10000)
