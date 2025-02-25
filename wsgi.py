@@ -31,9 +31,8 @@ flask==2.0.1
 python-binance==1.0.16
 gunicorn==21.2.0# Expõe o servidor para o gunicorn
 from app import app
-
-# Expõe o servidor para o gunicorn
-server = app.server
+def create_app():
+    return app
 
 if __name__ == "__main__":
-    app.run_server(host='0.0.0.0', port=10000)
+    app.run(host='0.0.0.0', port=10000)

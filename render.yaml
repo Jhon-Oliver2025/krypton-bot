@@ -3,16 +3,14 @@ services:
     name: krypton-bot
     env: python
     region: frankfurt
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:server
+    buildCommand: pip install -r requirements.txt && pip install gunicorn
+    startCommand: gunicorn "wsgi:create_app()"
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
       - key: PORT
         value: 10000
-      - key: PYTHONUNBUFFERED
-        value: "true"
-      - key: GUNICORN_CMD_ARGS
-        value: "--preload"
+      - key: PYTHONPATH
+        value: .
     healthCheckPath: /
     autoDeploy: true
