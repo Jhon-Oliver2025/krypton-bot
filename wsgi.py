@@ -27,6 +27,11 @@ setup_inicial()
 server = app.server
 application = server
 
+flask==2.0.1
+python-binance==1.0.16
+gunicorn==21.2.0# Expõe o servidor para o gunicorn
+from app import app
+
 # Expõe o servidor para o gunicorn
 server = app.server
 

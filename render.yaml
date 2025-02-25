@@ -3,8 +3,8 @@ services:
     name: krypton-bot
     env: python
     region: frankfurt
-    buildCommand: pip install -r requirements.txt && pip install gunicorn
-    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 1 --timeout 120 --log-level debug wsgi:server
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:server
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
